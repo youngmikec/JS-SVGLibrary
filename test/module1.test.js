@@ -10,18 +10,18 @@ describe('Module 01 - SVG Library - sight.js', () => {
   const sight_constructor = (sight.length) ? sight.findMethod('constructor') : [];
   const draw = (sight.length) ? sight.findMethod('draw') : [];
 
-  it('Should have a `SVGElement` class. @svgelement-class', () => {
+  it('Should have an `SVGElement` class. @svgelement-class', () => {
     assert(svgelement.length, 'Have you created the `SVGElement` class?');
   });
 
-  it('Should have `SVGElement` class `constructor`. @svgelement-constructor', () => {
+  it('Should have an `SVGElement` class `constructor`. @svgelement-constructor', () => {
     assert(svgelement.length, 'Have you created the `SVGElement` class?');
     assert(svgelement_constructor.length, 'Does the `SVGElement` class have a `constructor`?');
     const params = svgelement_constructor.findParams();
     assert(params.length != 0 && params[0].name == 'type', 'Does the `SVGElement` class `constructor` have a parameter of `type`?');
   });
 
-  it('`Should have `SVGElement` `constructor` properties. @svgelement-constructor-class-properties', () => {
+  it('Should set `constructor` properties. @svgelement-constructor-class-properties', () => {
     assert(svgelement_constructor_assignments.length, 'Are you setting the correct class properties in the constructor?');
     const type = svgelement_constructor_assignments.classVariable('type');
     const type_right = type.length ? type.get().parent.value.right.name : false;
@@ -32,7 +32,7 @@ describe('Module 01 - SVG Library - sight.js', () => {
     assert(namespace_right == 'http://www.w3.org/2000/svg', 'Have you set `this.namespace` equal to `http://www.w3.org/2000/svg`?');
   });
 
-  it('Should create an NS element in `SVGElement` `constructor`. @svgelement-constructor-createelementns', () => {
+  it('Should create an NS element in the `SVGElement` `constructor`. @svgelement-constructor-createelementns', () => {
     assert(svgelement_constructor_assignments.length, 'Do you have an `SVGElement` class constructor?');
     const node = svgelement_constructor_assignments.classVariable('node').at(0);
     assert(node.length, 'Are you setting `this.node`?');
@@ -70,7 +70,7 @@ describe('Module 01 - SVG Library - sight.js', () => {
     assert(return_right == 'ThisExpression', 'Does the `SVGElement` `attr` method `return this`?');
   });
 
-  it('Should have `forEach` loop. @svgelement-attr-for', () => {
+  it('Should have a `forEach` loop. @svgelement-attr-for', () => {
     assert(for_of.length, 'Have you created a `for of` statement in the `attr` method?');
     const for_of_left = for_of.length ? for_of.get().value.left : false;
     const for_of_right = for_of.length ? for_of.get().value.right : false;
@@ -109,7 +109,7 @@ describe('Module 01 - SVG Library - sight.js', () => {
     assert(return_right == 'ThisExpression', 'Does the `SVGElement` `append` `return this`?');
   });
   
-  it('Should get parent in `append` method. @svgelement-append-get-parent', () => {
+  it('Should get parent element in `append` method. @svgelement-append-get-parent', () => {
     assert(append.length, 'Does the `SVGElement` class have a `append` method?');
     const parent_const = append.findVariable('parent');
     const parent_declarator = parent_const.length ? parent_const.get().value.declarations : false;
