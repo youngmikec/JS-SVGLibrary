@@ -249,7 +249,13 @@ describe('Module 01 - SVG Library - sight.js', () => {
     assert(arguments[1].properties.length === 3, 'Do you have 3 key value pairs in the object?');
 
     const properties = {};
-    arguments[1].properties.map(property => { properties[property.key.name] = property.value.value; });
+    arguments[1].properties.map(property => {
+      if (property.key.name) {
+        properties[property.key.name] =  property.value.value;
+      } else if (property.key.value) {
+        properties[property.key.value] =  property.value.value;
+      }
+    });
     const matched = JSON.stringify(properties) === JSON.stringify({ cx: 50, cy: 50, r: 50 })
     assert(matched, 'Are you passing an object with the correct attributes?');
   });
