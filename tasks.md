@@ -1,83 +1,103 @@
-# Setup
+## SVGElement Class
 
-## Installation
+In this module we will create a library that allows users of the library to create any type of SVG element and configure its attributes.
 
-Run the following command from the root folder of the cloned project to install all dependencies.
+To start, open the file `js/sight.js` and at the top add a `class` called `SVGElement`.
 
-`npm install`
+## SVGElement Class - Constructor
 
-## Verify Setup
+In the newly created `SVGElement` class, create a `constructor` that has a single parameter of `type`.
 
-In order to verify that everything is setup correctly, run the following command, which should show you the failing tests. This is good! We'll be fixing these tests once we jump into the build step.
+## SVGElement Class - Constructor Class Properties
 
-`npm run test`
+In the `SVGElement` class constructor, create a class property called `type`, set it equal to `type`.
 
-Every time you want to check your work locally you can type that command, and it will report the status of every task in that module.
+Also, assign a class property called `namespace` the value `'http://www.w3.org/2000/svg'`.
 
-As you move through the modules, you can run module-specific tests with the script `npm run test:module1`, replacing the number with one that corresponds with the module you are working in.
+**Hint: always use `this` when assigning class properties.**
 
-## Previewing Your Work
+## SVGElement Class - Constructor Create ElementNS
 
-In order to see your changes in a browser, you can run `npm start` from the command line. This will open a browser and you should see your landing page.
+In the `SVGElement` class constructor, assign a class property called `node` a call to the function `document.createElementNS()`.
 
-# Module 01 - SVG Library
+Pass in the `namespace` and `type` class properties to the function call.
 
-## 1.1 - Reference an external script
+Return `this` at the end of the constructor.
 
-@external-script Open `index.html` and add a `script` tag that references the CreateJS on the CreateJS CDN. Also add a `script` tag for the `app.js` file.
+## SVGElement Class - Attr Method
 
-## 1.2 - Listen for DOMContentLoaded
+Below the constructor, still in the `SVGElement` class, create a class method named `attr` that accepts a parameter of `attrs`.
 
-@listen-domcontentloaded Open `app.js` and add an event lister to the `document`. Listen for the `DOMContentLoaded` event. The event handler should be an anonymous function.
+In the body of the method, return `this`.
 
-## 1.3 - Key code constants
+## SVGElement Class - Attr Method For Loop
 
-@keycode-constants At the top of the event handler anonymous function. Declare 4 constants called `KEYCODE_LEFT`, `KEYCODE_UP`, `KEYCODE_RIGHT`, and `KEYCODE_DOWN`. Assign them the values 37, 38, 39 and 40 respectively.
+The `attrs` parameter should be an object. We need to loop through the object and get the key and value for each pair.
 
-## 1.5 - Create a stage
+The most efficient way to do this is using the new `Object.entries()` method and a `for of` loop.
 
-@create-stage Below the key code constants assign a constant called `stage` a `new createjs Stage`. Make sure that you have the proper ID.
+**Hint: Make sure you use array notation on the left side of the `of` keyword. Name the first element `key` and the second element `value`.**
 
-## 1.6 - Create a shape
+In the body of the `for of` loop, call `setAttributeNS()` on `this.node`. Pass the correct arguments to the function. **Hint: `null` should be the first argument.**
 
-@shio-shape Below the `stage` constant, assign a  Assign a constant called `ship` a `new createjs Shape`.
+## SVGElement Class - Append Method
 
-## 1.7 - Draw the ship shape
+Below the `attr` method, still in the `SVGElement` class, create a class method named `append` that accepts a parameter of `element`.
 
-@draw-ship On the `graphics` layer of the `ship` shape draw a white ship with the following points (0, 0); (30, 15); (0, 30); (7.5, 15); (0, 0);
+In the body of the method, return `this`.
 
-## 1.8 - Add a shape to the stage
+## SVGElement Class - Append Method Get Parent
 
-@ship-addchild Add the `ship` Shape to the `stage`.
+In the `append` method, we would like to detect whether the `element` being passed in is a string.
 
-## 1.9 - Ticker event listener
+In a ternary statement, use the `typeof` operator to check if `element` is of type `string`.
 
-@ticker-event-listener Using the `createjs.Ticker` object and the on method, register a handler for the "tick" event. The handler function should be and anonymous function that updates the `stage`.
+In the `if` block, use `document.querySelector()` to select the `element`.
 
-## 1.10 - Ticker FPS
+In the `else` block get the `element` `node`.
 
-@Ticker-fps Use `createjs.Ticker` object and `setFPS()` to set the frame per second to 30.
+Assign the statement to the constant `parent`.
 
-## 1.11 - Keyboard listener
+## SVGElement Class - Append Method Append Child
 
-@keyboard-listener Listen for when a user presses a key down. The handler should be called be and anonymous function with an `event` argument.
+Append `this.node` to `parent` using the correct DOM method.
 
-## 1.12 - Switch statement
+## Sight Class
 
-@switch-statement Create a new switch statement and test the event.keyCode
+Add a `class` called `Sight` below the `SVGElement` class.
 
-## 1.13 - Left key
+## Sight Class - Constructor
 
-@left-key Create a case for KEYCODE_LEFT that moves the ship left at the rate 15 pixels. Break out of this case.
+In the `Sight` class, create a `constructor` that has three parameters: `selector`, `width`, `height`.
 
-## 1.14 - Up key
+## Sight Class - Constructor New SVGElement Instance
 
-@up-key Create a case for KEYCODE_UP that moves the ship up at the rate 15 pixels. Break out of this case.
+In the body of the `Sight` class `constructor`, assign a class property of `svg` a `new` instance of the SVGElement class. Pass the type of `'svg'` to the `constructor`.
 
-## 1.15 - Right key
+Next, on the instance, chain a call to the `attr` method. Pass an object to the `attr` method that has a single key value pair. The key should be `viewbox` and the value should be a template literal that would create a string with the format `0 0 width height`.
 
-@up-key Create a case for KEYCODE_RIGHT that moves the ship right at the rate 15 pixels. Break out of this case.
+After the `attr` method, chain a call to the `append` method. Pass the `append` method `selector`.
 
-## 1.16 - Down key
+## Sight Class - Draw Method
 
-@down-key Create a case for KEYCODE_DOWN that moves the ship right at the rate 15 pixels. Break out of this case.
+The last method of our library will draw an SVG element to the root SVG element.
+
+Create this method called `draw` below the `Sight` class `constructor`. This draw method should accept the `type` of element to be drawn and the attributes(`attrs`) of the element.
+
+In the body of the `draw` method, return a new `SVGElement` instance. Pass `type` to the instance.
+
+Chain a call to the `attr` method, passing in `attrs`.
+
+Finally chain another call to the `append` method, passing in the `svg` class property.
+
+## Create Sight Instance
+
+We will now use our SVG Library to create a circle.
+
+Open the `index.html` file in the root directory, and find the empty `<script>` block at the bottom of the `<body>`.
+
+In the `<script>` block, create a new `Sight` instance, passing the instance the selector `'.svg'`, and the width and height of `400`. Save the instance to a constant called `svg`.
+
+## Draw Method
+
+The `svg` constant is now an instance of the `Sight` class. Call the `draw` method on this instance to draw a `circle`. Pass the `draw` method an object with the key value pairs for these attributes: `cx`, `cy` and `r` all set to `50`.
